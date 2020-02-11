@@ -13,12 +13,12 @@ using namespace std;
 
 // Function prototypes
 void DisplayMenu();
-int ProcessMenuInput(int minRange, int maxRange, string shapeName);
-int PromptForInteger(int minRange, int maxRange, string shapeName);
-string PromptForString(string prompt);
+int ProcessMenuInput(int minRange, int maxRange, const string& menuType);
+int PromptForInteger(int minRange, int maxRange, const string& menuType);
+string PromptForString(const string& prompt);
 void Encrypt(string& strToProcess, int shiftValue);
 void Decrypt(string& strToProcess, int shiftValue);
-void BruteForce(string strToProcess);
+void BruteForce(string& strToProcess);
 
 // main()
 // Parameters:
@@ -118,7 +118,7 @@ void DisplayMenu()
 // Description:
 //      Uses the PromptForInteger() function to get an integer from the user, and
 //      then ensures that value is within range before returning it
-int ProcessMenuInput(int minRange, int maxRange, string menuType)
+int ProcessMenuInput(int minRange, int maxRange, const string& menuType);
 {
     int input = 0;      // this will store whatever is passed back from PromptForInteger
 
@@ -147,7 +147,7 @@ int ProcessMenuInput(int minRange, int maxRange, string menuType)
 //      Gives the user a specific prompt for input based on the parameters. With a
 //      menuType of "menu", it will prompt for a main menu input. Otherwise, it is a
 //      shift value
-int PromptForInteger(int minRange, int maxRange, string menuType)
+int PromptForInteger(int minRange, int maxRange, const string& menuType);
 {
     int input = 0;          // this will store whatever the user inputs
 
@@ -177,7 +177,7 @@ int PromptForInteger(int minRange, int maxRange, string menuType)
 // Description:
 //      Takes in a string, and uses it to prompt the user to input a string.
 //      Then returns the string the user entered.
-string PromptForString(string prompt)
+string PromptForString(const string& prompt)
 {
     string inputString = "";    // Holds the string the user is going to input
 
@@ -201,8 +201,7 @@ void Encrypt(string& strToProcess, int shiftValue)
 {
     for (int i = 0; i < strToProcess.length(); i++)
     {
-        if ((strToProcess[i] >= 'A' && strToProcess[i] <= 'Z')
-            || (strToProcess[i] >= 'a' && strToProcess[i] <= 'z'))
+        if (isalpha(strToProcess[i]))
         {
             for (int j = 0; j < shiftValue; j++)
             {
@@ -230,8 +229,7 @@ void Decrypt(string& strToProcess, int shiftValue)
 {
     for (int i = 0; i < strToProcess.length(); i++)
     {
-        if ((strToProcess[i] >= 'A' && strToProcess[i] <= 'Z')
-            || (strToProcess[i] >= 'a' && strToProcess[i] <= 'z'))
+        if (isalpha(strToProcess[i]))
         {
             for (int j = 0; j < shiftValue; j++)
             {
@@ -254,7 +252,7 @@ void Decrypt(string& strToProcess, int shiftValue)
 // Description:
 //      Takes in a string, and uses the decrypt function to run the string
 //      through all 26 possible variations of that string
-void BruteForce(string strToProcess)
+void BruteForce(string& strToProcess)
 {
     cout << "Decrypted as :" << endl;
     for (int i = 1; i < 26; i++)
